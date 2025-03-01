@@ -22,12 +22,14 @@ class HomeScreen extends StatelessWidget {
       body: Column(
         children: [
           CustomSearchBar(),
-          Column(
-            children: [
-              CustomCardRecipe(),
-              CustomCardRecipe(),
-              CustomCardRecipe()
-            ],
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                CustomCardRecipe(),
+                CustomCardRecipe(),
+                CustomCardRecipe()
+              ],
+            ),
           )
         ],
       )

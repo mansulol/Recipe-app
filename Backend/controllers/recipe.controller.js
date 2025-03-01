@@ -30,8 +30,9 @@ exports.getAllRecipes = asyncHandler(async (req, res) => {
 // This function retrieves all the recipes based on a recipe ID
 exports.getOneRecipe = asyncHandler(async (req, res) => {
   const id = req.params.id;
+  const objectId = new mongodb.ObjectId(id)
 
-  const recipes = await Recipe.findOne({ _id: id });
+  const recipes = await Recipe.findOne({ _id: objectId });
   res.status(200).json(recipes);
 });
 
