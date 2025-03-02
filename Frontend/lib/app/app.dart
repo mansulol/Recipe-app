@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:recipe_app/screens/create_edit_screen.dart';
-// import 'package:recipe_app/screens/home_screen.dart';
-import 'package:recipe_app/screens/recipe_screen.dart';
+import 'package:recipe_app/screens/home_screen.dart';
+// import 'package:recipe_app/screens/recipe_screen.dart';
 
 class App extends StatelessWidget {
 
@@ -12,7 +12,7 @@ class App extends StatelessWidget {
     return const MaterialApp(
       title: 'Recipe App',
       home: Scaffold(
-        body: RecipeScreen(),
+        body: HomeScreen(),
       ),
     );
   }

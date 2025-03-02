@@ -1,9 +1,9 @@
 class RecipeCardModel {
-  final String id;
-  final String name;
-  final Map<String, double> nutrition;
-  final int servingMax;
-  final int cookTime;
+  final String? id;
+  final String? name;
+  final Map<String, dynamic>? nutrition;
+  final int? servingMax;
+  final int? cookTime;
 
   RecipeCardModel({
     required this.id,
@@ -17,9 +17,9 @@ class RecipeCardModel {
     return RecipeCardModel(
       id: json['_id'], 
       name: json['name'], 
-      nutrition: Map<String, double>.from(json['nutrition']),
-      servingMax: json['serving']['max'], 
-      cookTime: json['cookTime'],
+      nutrition: Map<String, dynamic>.from(json['nutrition'] ?? []),
+      servingMax: json['serving']['max'] as int?, 
+      cookTime: json['cookTime'] as int?,
       );
   }
 

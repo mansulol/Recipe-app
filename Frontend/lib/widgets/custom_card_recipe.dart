@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/models/recipe_card_model.dart';
 import 'package:recipe_app/utils/constants.dart';
 
 class CustomCardRecipe extends StatelessWidget {
-  const CustomCardRecipe({super.key});
+  final RecipeCardModel recipe;
+  const CustomCardRecipe(this.recipe, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,7 @@ class CustomCardRecipe extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Papas Arrugadas",
+                  recipe.name ?? "No name",
                   textAlign: TextAlign.start,
                   softWrap: true,
                   style: TextStyle(
@@ -46,15 +48,11 @@ class CustomCardRecipe extends StatelessWidget {
                     color: AppColors.primaryColor,
                   ),
                 ),
-                Text("Servings: 4"),
-                Text("Cook Time: 10 mins"),
+                Text("Servings: ${recipe.servingMax}"),
+                Text("Cook Time: ${recipe.cookTime} mins"),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    specRecipeText("Prot", 13),
-                    specRecipeText("Carbs", 62.5),
-                    specRecipeText("Fibre", 3.1),
-                  ],
+                  children: [...specRecipeMap(recipe.nutrition)],
                 ),
               ],
             ),
@@ -65,7 +63,17 @@ class CustomCardRecipe extends StatelessWidget {
   }
 }
 
-Row specRecipeText(String spec, double quantity) {
+List<Row> specRecipeMap(Map<String, dynamic>? specs) {
+  List<Row> nutrition = [];
+
+  specs?.forEach((spec, value) {
+    nutrition.add(specRecipeText(spec, value));
+  });
+
+  return nutrition;
+}
+
+Row specRecipeText(String spec, dynamic quantity) {
   return Row(
     spacing: 3,
     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -75,7 +83,7 @@ Row specRecipeText(String spec, double quantity) {
         style: TextStyle(
           fontSize: AppTextStyles.bodySmall.fontSize,
           color: AppColors.primaryColor,
-          fontWeight: FontWeight.bold
+          fontWeight: FontWeight.bold,
         ),
       ),
       Text(

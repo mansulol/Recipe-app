@@ -1,38 +1,70 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/models/recipe_card_model.dart';
+import 'package:recipe_app/services/recipe_service.dart';
 import 'package:recipe_app/utils/constants.dart';
 import 'package:recipe_app/widgets/custom_card_recipe.dart';
 // import 'package:recipe_app/utils/constants.dart';
 import 'package:recipe_app/widgets/custom_search_bar.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({ super.key });
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  HomeScreenState createState() => HomeScreenState();
+}
+
+class HomeScreenState extends State<HomeScreen> {
+  late Future<List<RecipeCardModel>> recipesList;
+
+  @override
+  void initState() {
+    super.initState();
+    final RecipeService recipeService = RecipeService();
+    recipesList = recipeService.getAllRecipes();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
-        title: Text("Recipe App", style: TextStyle(
-          fontSize: AppTextStyles.titleApp.fontSize,
-          fontFamily: AppTextStyles.title.fontFamily,
-          fontWeight: FontWeight.w900,
-          color: AppColors.primaryColor
-        ),),
+        title: Text(
+          "Recipe App",
+          style: TextStyle(
+            fontSize: AppTextStyles.titleApp.fontSize,
+            fontFamily: AppTextStyles.title.fontFamily,
+            fontWeight: FontWeight.w900,
+            color: AppColors.primaryColor,
+          ),
+        ),
       ),
       body: Column(
         children: [
           CustomSearchBar(),
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                CustomCardRecipe(),
-                CustomCardRecipe(),
-                CustomCardRecipe()
-              ],
+          Expanded(
+            child: FutureBuilder<List<RecipeCardModel>>(
+              future: recipesList,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else if (snapshot.hasData) {
+                  final recipes = snapshot.data!;
+                  return ListView.builder(
+                    itemCount: recipes.length,
+                    itemBuilder: (context, index) {
+                      return CustomCardRecipe(recipes[index]);
+                    },
+                  );
+                } else {
+                  return Center(child: Text('No data'));
+                }
+              },
             ),
-          )
+          ),
         ],
-      )
+      ),
     );
   }
 }
