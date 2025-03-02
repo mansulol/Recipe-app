@@ -4,7 +4,7 @@ import '../models/recipe_model.dart';
 import '../models/recipe_card_model.dart';
 
 class RecipeService {
-  final String endPoint = 'http://localhost:8080/api/recipes';
+  final String endPoint = 'http://10.0.2.2:8080/api/recipes';
 
   Future<List<RecipeCardModel>> getAllRecipes() async {
     final response = await http.get(Uri.parse(endPoint));
@@ -17,12 +17,11 @@ class RecipeService {
     }
   }
 
-  Future<List<RecipeModel>> getOneRecipe(String id) async {
+  Future<RecipeModel> getOneRecipe(String id) async {
     final response = await http.get(Uri.parse('$endPoint/$id'));
     
     if (response.statusCode == 200) {
-      List<dynamic> data = json.decode(response.body);
-      return data.map((json) => RecipeModel.fromJson(json)).toList();
+      return RecipeModel.fromJson( jsonDecode(response.body));
     } else {
       throw Exception('Error while retrieving recipes');
     }

@@ -12,9 +12,7 @@ class App extends StatelessWidget {
     return const MaterialApp(
       title: 'Recipe App',
       home: Scaffold(
-        body: Center(
-          child: RecipeScreen(),
-        ),
+        body: RecipeScreen(),
       ),
     );
   }
