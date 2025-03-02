@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/models/recipe_model.dart';
+import 'package:recipe_app/screens/home_screen.dart';
 import 'package:recipe_app/services/recipe_service.dart';
 import 'package:recipe_app/utils/constants.dart';
 
 class RecipeScreen extends StatefulWidget {
-  const RecipeScreen({super.key});
+  final String idRecipe;
+  const RecipeScreen(this.idRecipe, {super.key});
 
   @override
   RecipeScreenState createState() => RecipeScreenState();
@@ -18,14 +20,12 @@ class RecipeScreenState extends State<RecipeScreen> {
   @override
   void initState() {
     super.initState();
-    loadRecipe();
+    loadRecipe(widget.idRecipe);
   }
 
-  Future<void> loadRecipe() async {
+  Future<void> loadRecipe(idRecipe) async {
     try {
-      final data = await RecipeService().getOneRecipe(
-        '67c3b952d50ec2e29583c7a7',
-      );
+      final data = await RecipeService().getOneRecipe(idRecipe);
       setState(() {
         recipe = data;
         isLoading = false;
@@ -78,11 +78,19 @@ class RecipeScreenState extends State<RecipeScreen> {
           Image.asset('assets/images/Papas_arrugadas.jpg'),
           Positioned(
             top: 0,
-            child: Container(
-              width: 60,
-              height: 25,
-              margin: EdgeInsets.all(5),
-              color: Colors.green,
+            child: GestureDetector(
+              onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomeScreen()),
+              );
+            },
+              child: Container(
+                width: 60,
+                height: 25,
+                margin: EdgeInsets.all(5),
+                color: Colors.green,
+              ),
             ),
           ),
           Positioned(

@@ -12,6 +12,7 @@ class App extends StatelessWidget {
     return const MaterialApp(
       title: 'Recipe App',
       home: Scaffold(
+        backgroundColor: Colors.white,
         body: HomeScreen(),
       ),
     );

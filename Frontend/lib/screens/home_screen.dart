@@ -14,20 +14,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
-  late Future<List<RecipeCardModel>> recipesList;
 
   @override
   void initState() {
     super.initState();
-    final RecipeService recipeService = RecipeService();
-    recipesList = recipeService.getAllRecipes();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: Text(
           "Recipe App",
           style: TextStyle(
@@ -43,7 +41,7 @@ class HomeScreenState extends State<HomeScreen> {
           CustomSearchBar(),
           Expanded(
             child: FutureBuilder<List<RecipeCardModel>>(
-              future: recipesList,
+              future: RecipeService().getAllRecipes(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());

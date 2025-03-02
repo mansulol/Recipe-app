@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/models/recipe_card_model.dart';
+import 'package:recipe_app/screens/recipe_screen.dart';
 import 'package:recipe_app/utils/constants.dart';
 
 class CustomCardRecipe extends StatelessWidget {
@@ -17,47 +18,55 @@ class CustomCardRecipe extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         border: Border.all(color: AppColors.primaryColor, width: 1),
       ),
-      child: Row(
-        children: [
-          Flexible(
-            flex: 1,
-            child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-              width: 120,
-              height: 92,
-              child: Image(
-                image: AssetImage('assets/images/Papas_arrugadas.jpg'),
-                fit: BoxFit.cover,
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => RecipeScreen(recipe.id ?? "")),
+          );
+        },
+        child: Row(
+          children: [
+            Flexible(
+              flex: 1,
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                width: 120,
+                height: 92,
+                child: Image(
+                  image: AssetImage('assets/images/Papas_arrugadas.jpg'),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          Expanded(
-            flex: 2,
-            // margin: EdgeInsets.all(5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  recipe.name ?? "No name",
-                  textAlign: TextAlign.start,
-                  softWrap: true,
-                  style: TextStyle(
-                    fontSize: AppTextStyles.subTitle.fontSize,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: AppTextStyles.subTitle.fontFamily,
-                    color: AppColors.primaryColor,
+            Expanded(
+              flex: 2,
+              // margin: EdgeInsets.all(5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    recipe.name ?? "No name",
+                    textAlign: TextAlign.start,
+                    softWrap: true,
+                    style: TextStyle(
+                      fontSize: AppTextStyles.subTitle.fontSize,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: AppTextStyles.subTitle.fontFamily,
+                      color: AppColors.primaryColor,
+                    ),
                   ),
-                ),
-                Text("Servings: ${recipe.servingMax}"),
-                Text("Cook Time: ${recipe.cookTime} mins"),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [...specRecipeMap(recipe.nutrition)],
-                ),
-              ],
+                  Text("Servings: ${recipe.servingMax}"),
+                  Text("Cook Time: ${recipe.cookTime} mins"),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [...specRecipeMap(recipe.nutrition)],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
