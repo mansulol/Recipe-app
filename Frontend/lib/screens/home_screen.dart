@@ -39,6 +39,8 @@ class HomeScreenState extends State<HomeScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       appBar: AppBar(
         backgroundColor: Colors.white,
+        // Deactivate back arrow
+        automaticallyImplyLeading: false,
         title: Text(
           "Recipe App",
           style: TextStyle(

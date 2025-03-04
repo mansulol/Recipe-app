@@ -145,7 +145,3 @@ Row specRecipeText(String spec, dynamic quantity) {
     ],
   );
 }
-
-Future<void> deleteWidget(String id) async {
-  
-}

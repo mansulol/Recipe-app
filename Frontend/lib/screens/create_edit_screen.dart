@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:recipe_app/models/create_edit_model.dart';
 import 'package:recipe_app/models/recipe_model.dart';
 import 'package:recipe_app/screens/home_screen.dart';
@@ -52,7 +53,7 @@ class CreateEditScreenState extends State<CreateEditScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.isCreate ? 'Create Page' : 'Edit Page',
+          widget.isCreate ? 'Create Recipe' : 'Edit Recipe',
           style: TextStyle(
             color: AppColors.primaryColor,
             fontWeight: FontWeight.w800,
@@ -61,12 +62,14 @@ class CreateEditScreenState extends State<CreateEditScreen> {
           ),
         ),
       ),
-      body: formBody(
-        context,
-        formControllers,
-        widget.isCreate,
-        recipe,
-        createEditModel,
+      body: SingleChildScrollView(
+        child: formBody(
+          context,
+          formControllers,
+          widget.isCreate,
+          recipe,
+          createEditModel,
+        ),
       ),
     );
   }
@@ -83,163 +86,243 @@ Container formBody(
     margin: EdgeInsets.all(10),
     child: Column(
       children: [
-        SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextField(
-                controller: formControllers.nameController,
-                decoration: InputDecoration(
-                  hintText:
-                      isCreate
-                          ? "Enter the recipe name..."
-                          : formControllers.nameController.text,
-                  labelText: "Name",
-                  labelStyle: TextStyle(
-                    color: AppColors.primaryColor,
-                    fontWeight: FontWeight.w600,
-                    fontSize: AppTextStyles.subTitle.fontSize,
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextField(
+              controller: formControllers.nameController,
+              decoration: InputDecoration(
+                hintText:
+                    isCreate
+                        ? "Enter the recipe name..."
+                        : formControllers.nameController.text,
+                labelText: "Name",
+                labelStyle: TextStyle(
+                  color: AppColors.primaryColor,
+                  fontWeight: FontWeight.w600,
+                  fontSize: AppTextStyles.subTitle.fontSize,
+                ),
+                prefixIcon: SizedBox(
+                  width: 30,
+                  height: 30,
+                  child: Center(
+                    child: FaIcon(
+                      FontAwesomeIcons.pizzaSlice,
+                      size: 20,
+                      color: AppColors.primaryColor,
+                    ),
                   ),
-                  prefixIcon: Icon(Icons.account_circle),
-                  prefixIconColor: AppColors.primaryColor,
                 ),
               ),
-              TextField(
-                controller: formControllers.descriptionController,
-                decoration: InputDecoration(
-                  hintText: "Enter A Description",
-                  labelText: "Description",
-                  labelStyle: TextStyle(
-                    color: AppColors.primaryColor,
-                    fontWeight: FontWeight.w600,
-                    fontSize: AppTextStyles.subTitle.fontSize,
+            ),
+            TextField(
+              controller: formControllers.descriptionController,
+              decoration: InputDecoration(
+                hintText: "Enter A Description",
+                labelText: "Description",
+                labelStyle: TextStyle(
+                  color: AppColors.primaryColor,
+                  fontWeight: FontWeight.w600,
+                  fontSize: AppTextStyles.subTitle.fontSize,
+                ),
+                prefixIcon: SizedBox(
+                  width: 30,
+                  height: 30,
+                  child: Center(
+                    child: FaIcon(
+                      FontAwesomeIcons.pencil,
+                      size: 20,
+                      color: AppColors.primaryColor,
+                    ),
                   ),
-                  prefixIcon: Icon(Icons.edit),
-                  prefixIconColor: AppColors.primaryColor,
                 ),
               ),
-              TextField(
-                controller: formControllers.servingController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  hintText: "min - max",
-                  labelText: "Serving amount",
-                  labelStyle: TextStyle(
-                    color: AppColors.primaryColor,
-                    fontWeight: FontWeight.w600,
-                    fontSize: AppTextStyles.subTitle.fontSize,
+            ),
+            TextField(
+              controller: formControllers.servingController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                hintText: "min - max",
+                labelText: "Serving amount",
+                labelStyle: TextStyle(
+                  color: AppColors.primaryColor,
+                  fontWeight: FontWeight.w600,
+                  fontSize: AppTextStyles.subTitle.fontSize,
+                ),
+                prefixIcon: SizedBox(
+                  width: 30,
+                  height: 30,
+                  child: Center(
+                    child: FaIcon(
+                      FontAwesomeIcons.userGroup,
+                      size: 20,
+                      color: AppColors.primaryColor,
+                    ),
                   ),
-                  prefixIcon: Icon(Icons.access_time),
-                  prefixIconColor: AppColors.primaryColor,
                 ),
               ),
-              TextField(
-                controller: formControllers.cookTimeController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  hintText: "Duration in minutes...",
-                  labelText: "Cooking Time",
-                  labelStyle: TextStyle(
-                    color: AppColors.primaryColor,
-                    fontWeight: FontWeight.w600,
-                    fontSize: AppTextStyles.subTitle.fontSize,
+            ),
+            TextField(
+              controller: formControllers.cookTimeController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                hintText: "Duration in minutes...",
+                labelText: "Cooking Time",
+                labelStyle: TextStyle(
+                  color: AppColors.primaryColor,
+                  fontWeight: FontWeight.w600,
+                  fontSize: AppTextStyles.subTitle.fontSize,
+                ),
+                prefixIcon: SizedBox(
+                  width: 30,
+                  height: 30,
+                  child: Center(
+                    child: FaIcon(
+                      FontAwesomeIcons.clock,
+                      size: 20,
+                      color: AppColors.primaryColor,
+                    ),
                   ),
-                  prefixIcon: Icon(Icons.coffee_maker_outlined),
-                  prefixIconColor: AppColors.primaryColor,
                 ),
               ),
-              TextField(
-                controller: formControllers.difficultyController,
-                decoration: InputDecoration(
-                  hintText: "Easy - medium - hard",
-                  labelText: "Dificulty",
-                  labelStyle: TextStyle(
-                    color: AppColors.primaryColor,
-                    fontWeight: FontWeight.w600,
-                    fontSize: AppTextStyles.subTitle.fontSize,
+            ),
+            TextField(
+              controller: formControllers.difficultyController,
+              decoration: InputDecoration(
+                hintText: "Easy - medium - hard",
+                labelText: "Dificulty",
+                labelStyle: TextStyle(
+                  color: AppColors.primaryColor,
+                  fontWeight: FontWeight.w600,
+                  fontSize: AppTextStyles.subTitle.fontSize,
+                ),
+                prefixIcon: Icon(Icons.star),
+                prefixIconColor: AppColors.primaryColor,
+              ),
+            ),
+            TextField(
+              controller: formControllers.ingredientsController,
+              decoration: InputDecoration(
+                hintText: "Separate ingredients by comma...",
+                labelText: "Ingredients",
+                labelStyle: TextStyle(
+                  color: AppColors.primaryColor,
+                  fontWeight: FontWeight.w600,
+                  fontSize: AppTextStyles.subTitle.fontSize,
+                ),
+                prefixIcon: SizedBox(
+                  width: 30,
+                  height: 30,
+                  child: Center(
+                    child: FaIcon(
+                      FontAwesomeIcons.utensils,
+                      size: 20,
+                      color: AppColors.primaryColor,
+                    ),
                   ),
-                  prefixIcon: Icon(Icons.star),
-                  prefixIconColor: AppColors.primaryColor,
                 ),
               ),
-              TextField(
-                controller: formControllers.ingredientsController,
-                decoration: InputDecoration(
-                  hintText: "Separate ingredients by comma...",
-                  labelText: "Ingredients",
-                  labelStyle: TextStyle(
-                    color: AppColors.primaryColor,
-                    fontWeight: FontWeight.w600,
-                    fontSize: AppTextStyles.subTitle.fontSize,
+            ),
+            TextField(
+              controller: formControllers.preparationController,
+              maxLength: null,
+              decoration: InputDecoration(
+                hintText: "Separate steps by comma...",
+                labelText: "Preparation",
+                labelStyle: TextStyle(
+                  color: AppColors.primaryColor,
+                  fontWeight: FontWeight.w600,
+                  fontSize: AppTextStyles.subTitle.fontSize,
+                ),
+                prefixIcon: SizedBox(
+                  width: 30,
+                  height: 30,
+                  child: Center(
+                    child: FaIcon(
+                      FontAwesomeIcons.bowlFood,
+                      size: 20,
+                      color: AppColors.primaryColor,
+                    ),
                   ),
-                  prefixIcon: Icon(Icons.apple),
-                  prefixIconColor: AppColors.primaryColor,
                 ),
               ),
-              TextField(
-                controller: formControllers.preparationController,
-                maxLength: null,
-                decoration: InputDecoration(
-                  hintText: "Separate steps by comma...",
-                  labelText: "Preparation",
-                  labelStyle: TextStyle(
-                    color: AppColors.primaryColor,
-                    fontWeight: FontWeight.w600,
-                    fontSize: AppTextStyles.subTitle.fontSize,
+            ),
+            TextField(
+              controller: formControllers.proteinController,
+              maxLength: null,
+              decoration: InputDecoration(
+                hintText: "Ej: 3.1g",
+                labelText: "Protein (g)",
+                labelStyle: TextStyle(
+                  color: AppColors.primaryColor,
+                  fontWeight: FontWeight.w600,
+                  fontSize: AppTextStyles.subTitle.fontSize,
+                ),
+                prefixIcon: SizedBox(
+                  width: 30,
+                  height: 30,
+                  child: Center(
+                    child: FaIcon(
+                      FontAwesomeIcons.drumstickBite,
+                      size: 20,
+                      color: AppColors.primaryColor,
+                    ),
                   ),
-                  prefixIcon: Icon(Icons.portable_wifi_off),
-                  prefixIconColor: AppColors.primaryColor,
                 ),
               ),
-              TextField(
-                controller: formControllers.proteinController,
-                maxLength: null,
-                decoration: InputDecoration(
-                  hintText: "Ej: 3.1g",
-                  labelText: "Protein (g)",
-                  labelStyle: TextStyle(
-                    color: AppColors.primaryColor,
-                    fontWeight: FontWeight.w600,
-                    fontSize: AppTextStyles.subTitle.fontSize,
+            ),
+            TextField(
+              controller: formControllers.carbsController,
+              maxLength: null,
+              decoration: InputDecoration(
+                hintText: "Ej: 15.3g",
+                labelText: "Carbohidrates (g)",
+                labelStyle: TextStyle(
+                  color: AppColors.primaryColor,
+                  fontWeight: FontWeight.w600,
+                  fontSize: AppTextStyles.subTitle.fontSize,
+                ),
+                prefixIcon: SizedBox(
+                  width: 30,
+                  height: 30,
+                  child: Center(
+                    child: FaIcon(
+                      FontAwesomeIcons.bowlRice,
+                      size: 20,
+                      color: AppColors.primaryColor,
+                    ),
                   ),
-                  prefixIcon: Icon(Icons.receipt_long_rounded),
-                  prefixIconColor: AppColors.primaryColor,
                 ),
               ),
-              TextField(
-                controller: formControllers.carbsController,
-                maxLength: null,
-                decoration: InputDecoration(
-                  hintText: "Ej: 15.3g",
-                  labelText: "Carbohidrates (g)",
-                  labelStyle: TextStyle(
-                    color: AppColors.primaryColor,
-                    fontWeight: FontWeight.w600,
-                    fontSize: AppTextStyles.subTitle.fontSize,
+            ),
+            TextField(
+              controller: formControllers.fibreController,
+              maxLength: null,
+              decoration: InputDecoration(
+                hintText: "Ej: 9.2g",
+                labelText: "Fibre (g)",
+                labelStyle: TextStyle(
+                  color: AppColors.primaryColor,
+                  fontWeight: FontWeight.w600,
+                  fontSize: AppTextStyles.subTitle.fontSize,
+                ),
+                prefixIcon: SizedBox(
+                  width: 30,
+                  height: 30,
+                  child: Center(
+                    child: FaIcon(
+                      FontAwesomeIcons.leaf,
+                      size: 20,
+                      color: AppColors.primaryColor,
+                    ),
                   ),
-                  prefixIcon: Icon(Icons.rice_bowl),
-                  prefixIconColor: AppColors.primaryColor,
                 ),
               ),
-              TextField(
-                controller: formControllers.fibreController,
-                maxLength: null,
-                decoration: InputDecoration(
-                  hintText: "Ej: 9.2g",
-                  labelText: "Fibre (g)",
-                  labelStyle: TextStyle(
-                    color: AppColors.primaryColor,
-                    fontWeight: FontWeight.w600,
-                    fontSize: AppTextStyles.subTitle.fontSize,
-                  ),
-                  prefixIcon: Icon(Icons.warehouse_outlined),
-                  prefixIconColor: AppColors.primaryColor,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
+        SizedBox(height: 20),
         ElevatedButton(
           onPressed: () async {
             await sendData(
@@ -250,7 +333,10 @@ Container formBody(
               handlerCreateEdit,
             );
           },
-          child: Text(isCreate ? 'CREATE' : 'EDIT'),
+          child: Text(
+            isCreate ? 'CREATE' : 'EDIT',
+            style: TextStyle(color: AppColors.primaryColor),
+          ),
         ),
       ],
     ),

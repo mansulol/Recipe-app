@@ -36,7 +36,7 @@ class FormControllers {
     servingController.text =
         '${recipe.servingMin} - ${recipe.servingMax}';
     cookTimeController.text = recipe.cookTime.toString();
-    difficultyController.text = recipe.difficulty.toString();
+    difficultyController.text = int.parse(recipe.difficulty.toString().trim()) == 3 ? 'Hard' : int.parse(recipe.difficulty.toString().trim()) == 2 ? 'Medium' : 'Easy';
     ingredientsController.text =
         recipe.ingredients?.join(', ') ?? '';
     preparationController.text =

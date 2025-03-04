@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:recipe_app/models/recipe_model.dart';
 import 'package:recipe_app/screens/home_screen.dart';
 import 'package:recipe_app/services/recipe_service.dart';
@@ -80,16 +81,26 @@ class RecipeScreenState extends State<RecipeScreen> {
             top: 0,
             child: GestureDetector(
               onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => HomeScreen()),
-              );
-            },
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                );
+              },
               child: Container(
                 width: 60,
                 height: 25,
                 margin: EdgeInsets.all(5),
-                color: Colors.green,
+                decoration: BoxDecoration(
+                  color: Colors.green, // Color de fondo
+                  borderRadius: BorderRadius.circular(5), // Bordes redondeados
+                ),
+                child: Center(
+                  child: FaIcon(
+                    FontAwesomeIcons.arrowLeft,
+                    size: 25,
+                    color: Colors.white,
+                  ),
+                ),
               ),
             ),
           ),
@@ -125,8 +136,9 @@ class RecipeScreenState extends State<RecipeScreen> {
         children: [
           Row(
             children: [
-              Icon(
-                Icons.emoji_food_beverage_rounded,
+              FaIcon(
+                FontAwesomeIcons.bowlFood,
+                size: 20,
                 color: AppColors.primaryColor,
               ),
               SizedBox(width: 5),
@@ -159,8 +171,9 @@ class RecipeScreenState extends State<RecipeScreen> {
             padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
             child: Row(
               children: [
-                Icon(
-                  Icons.emoji_food_beverage_rounded,
+                FaIcon(
+                  FontAwesomeIcons.utensils,
+                  size: 20,
                   color: AppColors.primaryColor,
                 ),
                 SizedBox(width: 5),
@@ -180,8 +193,9 @@ class RecipeScreenState extends State<RecipeScreen> {
             padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
             child: Row(
               children: [
-                Icon(
-                  Icons.emoji_food_beverage_rounded,
+                FaIcon(
+                  FontAwesomeIcons.clock,
+                  size: 20,
                   color: AppColors.primaryColor,
                 ),
                 SizedBox(width: 5),
@@ -276,7 +290,11 @@ class RecipeScreenState extends State<RecipeScreen> {
         children: [
           Row(
             children: [
-              Icon(Icons.emoji_food_beverage_rounded, color: Colors.white),
+              FaIcon(
+                FontAwesomeIcons.appleWhole,
+                size: 20,
+                color: Colors.white,
+              ),
               SizedBox(width: 5),
               Text(
                 "Ingredients",
@@ -291,7 +309,11 @@ class RecipeScreenState extends State<RecipeScreen> {
           ),
           SizedBox(
             width: double.infinity,
-            child: _listToColumnStyler(ingredientsList ?? [], Colors.white, false),
+            child: _listToColumnStyler(
+              ingredientsList ?? [],
+              Colors.white,
+              false,
+            ),
           ),
         ],
       ),
@@ -319,8 +341,9 @@ class RecipeScreenState extends State<RecipeScreen> {
                 ),
                 Row(
                   children: [
-                    Icon(
-                      Icons.emoji_food_beverage_rounded,
+                    FaIcon(
+                      FontAwesomeIcons.drumstickBite,
+                      size: 30,
                       color: AppColors.primaryColor,
                     ),
                     SizedBox(width: 5),
@@ -352,8 +375,9 @@ class RecipeScreenState extends State<RecipeScreen> {
                 ),
                 Row(
                   children: [
-                    Icon(
-                      Icons.emoji_food_beverage_rounded,
+                    FaIcon(
+                      FontAwesomeIcons.bowlRice,
+                      size: 30,
                       color: AppColors.primaryColor,
                     ),
                     SizedBox(width: 5),
@@ -385,8 +409,9 @@ class RecipeScreenState extends State<RecipeScreen> {
                 ),
                 Row(
                   children: [
-                    Icon(
-                      Icons.emoji_food_beverage_rounded,
+                    FaIcon(
+                      FontAwesomeIcons.leaf,
+                      size: 30,
                       color: AppColors.primaryColor,
                     ),
                     SizedBox(width: 5),
@@ -410,35 +435,39 @@ class RecipeScreenState extends State<RecipeScreen> {
   }
 }
 
-List<Icon> _buildDifficultyIcons(int difficulty) {
-  return List.generate(difficulty, (index) {
-    return Icon(
-      Icons.emoji_food_beverage_rounded,
-      color: AppColors.primaryColor,
-    );
+List<FaIcon> _buildDifficultyIcons(int difficulty) {
+  return List.generate(3, (index) {
+    final color =
+        index < difficulty ? AppColors.primaryColor : AppColors.gray10;
+
+    return FaIcon(FontAwesomeIcons.carrot, size: 20, color: color);
   });
 }
 
 Column _listToColumnStyler(List<String>? items, Color color, bool ordered) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
-    children: items?.map((item) {
-      // Convertir la lista en un mapa indexado
-      final indexedItems = items.asMap();
+    children:
+        items?.map((item) {
+          // Convertir la lista en un mapa indexado
+          final indexedItems = items.asMap();
 
-      return Container(
-        padding: const EdgeInsets.symmetric(vertical: 5),
-        width: double.infinity,
-        child: Text(
-          // Si ordered es true, añadir el índice al texto
-          ordered ? '${indexedItems.keys.toList()[items.indexOf(item)] + 1}. $item' : item,
-          style: TextStyle(
-            color: color,
-            fontFamily: AppFonts.primaryFont,
-            fontSize: AppTextStyles.bodyBig.fontSize,
-          ),
-        ),
-      );
-    }).toList() ?? [],
+          return Container(
+            padding: const EdgeInsets.symmetric(vertical: 5),
+            width: double.infinity,
+            child: Text(
+              // Si ordered es true, añadir el índice al texto
+              ordered
+                  ? '${indexedItems.keys.toList()[items.indexOf(item)] + 1}. $item'
+                  : item,
+              style: TextStyle(
+                color: color,
+                fontFamily: AppFonts.primaryFont,
+                fontSize: AppTextStyles.bodyBig.fontSize,
+              ),
+            ),
+          );
+        }).toList() ??
+        [],
   );
 }
