@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/models/recipe_card_model.dart';
+import 'package:recipe_app/screens/create_edit_screen.dart';
 import 'package:recipe_app/services/recipe_service.dart';
 import 'package:recipe_app/utils/constants.dart';
 import 'package:recipe_app/widgets/custom_card_recipe.dart';
@@ -14,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
-
+  
   @override
   void initState() {
     super.initState();
@@ -24,6 +25,18 @@ class HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      floatingActionButton: FloatingActionButton(
+        onPressed:
+            () => {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CreateEditScreen( isCreate: true, )),
+              ),
+            },
+        backgroundColor: AppColors.primaryColor,
+        child: Icon(Icons.add, color: Colors.white),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(

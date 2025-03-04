@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:recipe_app/models/create_edit_model.dart';
 import 'dart:convert';
 import '../models/recipe_model.dart';
 import '../models/recipe_card_model.dart';
@@ -19,34 +20,37 @@ class RecipeService {
 
   Future<RecipeModel> getOneRecipe(String id) async {
     final response = await http.get(Uri.parse('$endPoint/$id'));
-    
+
     if (response.statusCode == 200) {
-      return RecipeModel.fromJson( jsonDecode(response.body));
+      return RecipeModel.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('Error while retrieving recipes');
     }
   }
 
-  Future<List<RecipeModel>> createRecipe(Map<String, dynamic> data) async {
-    final response = await http.post(Uri.parse(endPoint), body: data);
+   Future<RecipeModel> createRecipe(CreateEditModel model) async {
+    final response = await http.post(
+      Uri.parse(endPoint),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode(model.toJson()),
+    );
 
-    if (response.statusCode == 200) {
-      List<dynamic> data = json.decode(response.body);
-      return data.map((json) => RecipeModel.fromJson(json)).toList();
+    if (response.statusCode == 201) {
+      return RecipeModel.fromJson(json.decode(response.body));
     } else {
-      throw Exception('Error while retrieving recipes');
+      throw Exception('Failed to create recipe: ${response.body}');
     }
   }
 
-  Future<List<RecipeModel>> updateRecipe(
-    String id,
-    Map<String, dynamic> data,
-  ) async {
-    final response = await http.put(Uri.parse('$endPoint/$id'), body: data);
+  Future<RecipeModel> updateRecipe(String id, CreateEditModel model) async {
+    final response = await http.put(
+      Uri.parse('$endPoint/$id'),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode(model.toJson()),
+    );
 
     if (response.statusCode == 200) {
-      List<dynamic> data = json.decode(response.body);
-      return data.map((json) => RecipeModel.fromJson(json)).toList();
+      return RecipeModel.fromJson(json.decode(response.body));
     } else {
       throw Exception('Error while retrieving recipes');
     }

@@ -9,6 +9,8 @@ const asyncHandler = require("express-async-handler");
 exports.createRecipe = asyncHandler(async (req, res) => {
   const createBody = req.body;
 
+  console.log('POST', createBody)
+
   const newRecipe = new Recipe(createBody);
   const savedRecipe = await newRecipe.save();
 
@@ -42,6 +44,7 @@ exports.getOneRecipe = asyncHandler(async (req, res) => {
 // This function updates a existing recipe based on its ID
 exports.editRecipe = asyncHandler(async (req, res) => {
   const id = req.params.id;
+  console.log('PUT', id)
   const {
     name,
     description,

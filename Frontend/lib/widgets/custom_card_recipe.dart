@@ -1,14 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/models/recipe_card_model.dart';
+import 'package:recipe_app/screens/create_edit_screen.dart';
 import 'package:recipe_app/screens/recipe_screen.dart';
+import 'package:recipe_app/services/recipe_service.dart';
 import 'package:recipe_app/utils/constants.dart';
 
-class CustomCardRecipe extends StatelessWidget {
+class CustomCardRecipe extends StatefulWidget {
   final RecipeCardModel recipe;
   const CustomCardRecipe(this.recipe, {super.key});
 
   @override
+  CustomCardRecipeState createState() => CustomCardRecipeState();
+}
+
+
+class CustomCardRecipeState extends State<CustomCardRecipe> {
+
+
+
+  @override
   Widget build(BuildContext context) {
+
+  final RecipeCardModel recipe = widget.recipe;
+
     return Container(
       margin: EdgeInsets.all(10),
       padding: EdgeInsets.all(5),
@@ -22,7 +36,9 @@ class CustomCardRecipe extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => RecipeScreen(recipe.id ?? "")),
+            MaterialPageRoute(
+              builder: (context) => RecipeScreen(recipe.id ?? ""),
+            ),
           );
         },
         child: Row(
@@ -65,6 +81,30 @@ class CustomCardRecipe extends StatelessWidget {
                 ],
               ),
             ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                
+                GestureDetector(
+                  onTap: () => {
+                    RecipeService().deleteRecipe(recipe.id ?? "")
+                  },
+                  child: Icon(
+                    Icons.delete, 
+                    color: AppColors.primaryColor,
+                    ),
+                ),
+                GestureDetector(
+                  onTap: () => {
+                    Navigator.push(context, MaterialPageRoute(builder: (builder) => CreateEditScreen(isCreate: false, id: recipe.id ?? '',)))
+                  },
+                  child: Icon(
+                    Icons.edit, 
+                    color: AppColors.primaryColor,
+                    ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
@@ -104,4 +144,8 @@ Row specRecipeText(String spec, dynamic quantity) {
       ),
     ],
   );
+}
+
+Future<void> deleteWidget(String id) async {
+  
 }

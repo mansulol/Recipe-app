@@ -142,7 +142,7 @@ class RecipeScreenState extends State<RecipeScreen> {
             ],
           ),
           SizedBox(height: 10),
-          _listToColumnStyler(preparationList ?? [], Colors.black),
+          _listToColumnStyler(preparationList ?? [], Colors.black, true),
         ],
       ),
     );
@@ -247,12 +247,16 @@ class RecipeScreenState extends State<RecipeScreen> {
             ],
           ),
           SizedBox(height: 10),
-          Text(
-            description ?? 'No Description',
-            style: TextStyle(
-              fontSize: AppTextStyles.bodyBig.fontSize,
-              color: Colors.black,
-              fontFamily: AppFonts.primaryFont,
+          SizedBox(
+            width: double.infinity,
+            child: Text(
+              textAlign: TextAlign.start,
+              description ?? 'No Description',
+              style: TextStyle(
+                fontSize: AppTextStyles.bodyBig.fontSize,
+                color: Colors.black,
+                fontFamily: AppFonts.primaryFont,
+              ),
             ),
           ),
         ],
@@ -287,7 +291,7 @@ class RecipeScreenState extends State<RecipeScreen> {
           ),
           SizedBox(
             width: double.infinity,
-            child: _listToColumnStyler(ingredientsList ?? [], Colors.white),
+            child: _listToColumnStyler(ingredientsList ?? [], Colors.white, false),
           ),
         ],
       ),
@@ -415,23 +419,26 @@ List<Icon> _buildDifficultyIcons(int difficulty) {
   });
 }
 
-Column _listToColumnStyler(List<String>? items, Color color) {
+Column _listToColumnStyler(List<String>? items, Color color, bool ordered) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
-    children:
-        items?.map((item) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5),
-            child: Text(
-              item,
-              style: TextStyle(
-                color: color,
-                fontFamily: AppFonts.primaryFont,
-                fontSize: AppTextStyles.bodyBig.fontSize,
-              ),
-            ),
-          );
-        }).toList() ??
-        [],
+    children: items?.map((item) {
+      // Convertir la lista en un mapa indexado
+      final indexedItems = items.asMap();
+
+      return Container(
+        padding: const EdgeInsets.symmetric(vertical: 5),
+        width: double.infinity,
+        child: Text(
+          // Si ordered es true, añadir el índice al texto
+          ordered ? '${indexedItems.keys.toList()[items.indexOf(item)] + 1}. $item' : item,
+          style: TextStyle(
+            color: color,
+            fontFamily: AppFonts.primaryFont,
+            fontSize: AppTextStyles.bodyBig.fontSize,
+          ),
+        ),
+      );
+    }).toList() ?? [],
   );
 }
