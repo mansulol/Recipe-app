@@ -15,7 +15,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
-  
   @override
   void initState() {
     super.initState();
@@ -30,7 +29,9 @@ class HomeScreenState extends State<HomeScreen> {
             () => {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => CreateEditScreen( isCreate: true, )),
+                MaterialPageRoute(
+                  builder: (context) => CreateEditScreen(isCreate: true),
+                ),
               ),
             },
         backgroundColor: AppColors.primaryColor,
@@ -64,12 +65,17 @@ class HomeScreenState extends State<HomeScreen> {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 } else if (snapshot.hasData) {
                   final recipes = snapshot.data!;
-                  return ListView.builder(
-                    itemCount: recipes.length,
-                    itemBuilder: (context, index) {
-                      return CustomCardRecipe(recipes[index]);
-                    },
-                  );
+                  return recipes.isNotEmpty
+                      ? ListView.builder(
+                        itemCount: recipes.length,
+                        itemBuilder: (context, index) {
+                          return CustomCardRecipe(recipes[index]);
+                        },
+                      )
+                      : Image.asset(
+                        'assets/images/carrot_outlined.png',
+                        width: 150,
+                      );
                 } else {
                   return Center(child: Text('No data'));
                 }

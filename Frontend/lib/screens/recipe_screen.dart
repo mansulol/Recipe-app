@@ -91,7 +91,7 @@ class RecipeScreenState extends State<RecipeScreen> {
                 height: 25,
                 margin: EdgeInsets.all(5),
                 decoration: BoxDecoration(
-                  color: Colors.green, // Color de fondo
+                  color: AppColors.primaryColor,
                   borderRadius: BorderRadius.circular(5), // Bordes redondeados
                 ),
                 child: Center(
