@@ -1,6 +1,6 @@
 
 <p align="center">
-<img alt="Image icon app" src="./assets/App%20Icon/app-icon.png" >
+<img alt="Image icon app" src="Assets/icons/app-icon.png" >
 </p>
 
 <p align="center">
@@ -24,12 +24,12 @@ Track your personal recipes
 
 <h2 id="about-the-project"> About The Project 🌐 </h2>
 
-| ![Image](./assets/iphone%20frame/Home-empty.png) | ![Image](./assets/iphone%20frame/Home.png) |  ![Image](./assets/iphone%20frame/Create-Edit%20Page.png) |
+| ![Image](Assets/mockups/home-page-empty.png) | ![Image](Assets/mockups/home-page.png) |  ![Image](Assets/mockups/form-page.png) |
 | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------| 
 
 
 
-| ![image](./assets/iphone%20frame/Recipe%20Page%201.png) | ![image](./assets/iphone%20frame/Recipe%20Page%202.png) |
+| ![image](Assets/mockups/recipe-page-1.png) | ![image](Assets/mockups/recipe-page-2.png) |
 |------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|      
 
 A tool for track your personal recipes. This app allow users to create, edit, list and and remove recipes.
